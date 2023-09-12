@@ -8,10 +8,24 @@ Common Commands:
 
 npx expo --tunnel
     --starts the app, displays exp qr code
+
+npm start
+    -- press a to use android emulator
+
 npm run android
     --runs android sdk
 
-    
+Core Components:
+https://reactnative.dev/docs/components-and-apis
+
+Styling:
+using the style sheet object gives auto complete/ validation while developing and results in better rendering from react native
+const styles = StyleSheet.create({
+  container: {
+
+  }
+  }
+
 Notes on react native: 
 
 UI elements compile to native elements
