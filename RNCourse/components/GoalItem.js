@@ -1,7 +1,6 @@
 import { StyleSheet, View, Text } from "react-native";
 
 function GoalItem (props) {
-    console.log(props.text)
   return (
     <View style={styles.goalItem}>
       <Text style={styles.goalText}>{props.text}</Text>
