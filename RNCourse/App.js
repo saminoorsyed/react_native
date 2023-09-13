@@ -6,6 +6,7 @@ import {
   View,
   FlatList
 } from "react-native";
+import { StatusBar } from "expo-status-bar";
 // custom components
 import GoalItem from "./components/GoalItem";
 import GoalInput from "./components/GoalInput";
@@ -30,27 +31,30 @@ export default function App() {
     });
   }
   return (
-    <View style={styles.appContainer}>
-      <Button title="Add New Goal" color="#5e0acc" onPress={startAddGoalHandler} />
-      <GoalInput showModal = {modalIsVis} onAddGoal={addGoalHandler} />
-      <View style={styles.goalsContainer}>
-        <FlatList
-          data={courseGoals}
-          renderItem={(itemData) => {
-            return (
-              <GoalItem
-                text={itemData.item.text}
-                id={itemData.item.id}
-                onDeleteItem={deleteGoalHandler}
-              />
-            );
-          }}
-          keyExtractor={(item, index) => {
-            return item.id;
-          }}
-        />
+    <>
+      <StatusBar style="light"/>
+      <View style={styles.appContainer}>
+        <Button title="Add New Goal" color="#7d3dcf" onPress={startAddGoalHandler} />
+        <GoalInput showModal = {modalIsVis} onAddGoal={addGoalHandler} hideModal = {startAddGoalHandler} />
+        <View style={styles.goalsContainer}>
+          <FlatList
+            data={courseGoals}
+            renderItem={(itemData) => {
+              return (
+                <GoalItem
+                  text={itemData.item.text}
+                  id={itemData.item.id}
+                  onDeleteItem={deleteGoalHandler}
+                />
+              );
+            }}
+            keyExtractor={(item, index) => {
+              return item.id;
+            }}
+          />
+        </View>
       </View>
-    </View>
+    </>
   );
 }
 
