@@ -1,6 +1,6 @@
-import { View, Text, StyleSheet, Alert } from "react-native";
+import { View, Text, StyleSheet, Alert, FlatList } from "react-native";
 import React, { useEffect, useState } from "react";
-import {Ionicons} from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
 import Title from "../components/ui/Title";
 import Colors from "../constants/colors";
@@ -8,6 +8,7 @@ import NumberContainer from "../components/game/NumberContainer";
 import MainButton from "../components/ui/MainButton";
 import Card from "../components/ui/Card";
 import InstructionText from "../components/ui/InstructionText";
+import GuessLogItem from "../components/game/GuessLogItem";
 
 function genRandGuess(min, max, exclude) {
   //exclude prevents comp from guessing number immediately
@@ -23,15 +24,21 @@ function genRandGuess(min, max, exclude) {
 let minBoundary = 1;
 let maxBoundary = 100;
 
-const GameScreen = ({ userNumber, onGameOver }) => {
+const GameScreen = ({ userNumber, onGameOver, handleLogRounds }) => {
   const initialGuess = genRandGuess(1, 100, userNumber);
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
-
+  const [guessRounds, setGuessRounds] = useState([initialGuess]);
   useEffect(() => {
     if (currentGuess === userNumber) {
-      onGameOver();
+      onGameOver(guessRoundsLength);
     }
   }, [currentGuess, userNumber, onGameOver]);
+  // empty array only executes on mounting with empty array
+  useEffect(() => {
+    minBoundary = 1;
+    maxBoundary = 100;
+  }, []);
+
   function nextGuessHandler(direction) {
     //direction => 'lower', 'greater
     if (
@@ -50,7 +57,13 @@ const GameScreen = ({ userNumber, onGameOver }) => {
     }
     const newRndNum = genRandGuess(minBoundary, maxBoundary, currentGuess);
     setCurrentGuess(newRndNum);
+    setGuessRounds((previousGuessRounds) => [
+      newRndNum,
+      ...previousGuessRounds,
+    ]);
   }
+
+  const guessRoundsLength = guessRounds.length;
 
   return (
     <View style={styles.screen}>
@@ -63,13 +76,22 @@ const GameScreen = ({ userNumber, onGameOver }) => {
         </InstructionText>
         <View style={styles.buttonContainer}>
           <MainButton onPress={nextGuessHandler.bind(this, "lower")}>
-            <Ionicons name = "md-remove" size = {24} color={'white'}/>
+            <Ionicons name="md-remove" size={24} color={"white"} />
           </MainButton>
           <MainButton onPress={nextGuessHandler.bind(this, "greater")}>
-            <Ionicons name= "md-add" size={24} color={"white"}/>
+            <Ionicons name="md-add" size={24} color={"white"} />
           </MainButton>
         </View>
       </Card>
+      <View style = {styles.guessLogContainer}>
+        <FlatList
+          data={guessRounds}
+          renderItem={(itemData) => (
+            <GuessLogItem roundNumber={guessRoundsLength - itemData.index} guess = {itemData.item}/>
+          )}
+          keyExtractor={(item) => item}
+        />
+      </View>
     </View>
   );
 };
@@ -92,5 +114,9 @@ const styles = StyleSheet.create({
   InstructionTextObject: {
     marginBottom: 12,
   },
+  guessLogContainer: {
+    flex: 1,
+    padding:16
+  }
 });
 export default GameScreen;
