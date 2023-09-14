@@ -65,7 +65,11 @@ const styles = StyleSheet.create({
 container: {attributes: value,},
 })
 
-Styles don't cascade
+Styles don't cascade unless you do the following:
+pass the style prop down and put your current style in a list. the order of the list determines the order it is processed, therefore, later items take precident
+const InstructionText = ({children, style }) => {
+  return <Text style={[styles.instructionText, style]}> {children} </Text>;
+}
 
 Background color can be set in app.json when using Expo for all main screens
 

@@ -1,43 +1,65 @@
 import { useState } from "react";
-import { StyleSheet, ImageBackground } from "react-native";
+import { StyleSheet, ImageBackground, SafeAreaView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { useFonts } from "expo-font";
+import  AppLoading from "expo-app-loading"
 
 import StartGameScreen from "./screens/StartGameScreen";
 import GameScreen from "./screens/GameScreen";
+import Colors from "./constants/colors";
+import GameOverScreen from "./screens/GameOverScreen";
 
 export default function App() {
   const [userNumber, setUserNumber] = useState();
+  const [gameIsOver, setGameIsOver] = useState(true);
 
+  const [fontsLoaded] = useFonts({
+    "open-sans": require("./assets/fonts/OpenSans-Regular.ttf"),
+    "open-sans-bold": require("./assets/fonts/OpenSans-Bold.ttf"),
+  });
+  // usefonts returns an array with a boolean fontsLoaded prop to indicate once the fonts
+  if (!fontsLoaded){
+    return <AppLoading/>
+  }
   function pickedNumberHandler(pickedNumber) {
     setUserNumber(pickedNumber);
+    setGameIsOver(false);
   }
 
-  let screen = <StartGameScreen onPickNum = {pickedNumberHandler}/>;
+  let screen = <StartGameScreen onPickNum={pickedNumberHandler} />;
 
-  if(userNumber){
-    screen = <GameScreen/>
+  if (userNumber) {
+    screen = (
+      <GameScreen userNumber={userNumber} onGameOver={gameOverHandler} />
+    );
+  }
+  if (gameIsOver && userNumber) {
+    screen = <GameOverScreen />;
+  }
+
+  function gameOverHandler() {
+    setGameIsOver(true);
   }
   return (
     <LinearGradient
-      colors={["#72063c", "#ddb52f"]}
-      style={styles.startScreenContainer}
+      colors={[Colors.primary600, Colors.secondary500]}
+      style={styles.rootScreen}
     >
       <ImageBackground
-        style={styles.startScreenContainer}
+        style={styles.rootScreen}
         source={require("./assets/Images/background.png")}
         resizeMode="cover"
         imageStyle={styles.bgImage}
       >
-        {screen}
+        <SafeAreaView style={styles.rootScreen}>{screen}</SafeAreaView>
       </ImageBackground>
     </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
-  startScreenContainer: {
+  rootScreen: {
     flex: 1,
-    justifyContent: "center",
   },
   bgImage: {
     opacity: 0.25,

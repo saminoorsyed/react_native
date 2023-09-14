@@ -1,6 +1,10 @@
 import React, {useState} from "react";
-import { TextInput, View, StyleSheet, Alert} from "react-native";
-import MainButton from "../components/MainButton";
+import { TextInput, View, StyleSheet, Alert, Text} from "react-native";
+import MainButton from "../components/ui/MainButton";
+import Colors from "../constants/colors";
+import Title from "../components/ui/Title";
+import Card from "../components/ui/Card";
+import InstructionText from "../components/ui/InstructionText";
 
 function StartGameScreen({onPickNum}) {
   const [enteredNumber, setEnteredNumber] = useState('');
@@ -27,44 +31,39 @@ function StartGameScreen({onPickNum}) {
 
   }
   return (
-    <View style={styles.inputContainer}>
-      <TextInput
-        style={styles.numberInput}
-        maxLength={2}
-        keyboardType="number-pad"
-        value = {enteredNumber}
-        onChangeText={numberInputHandler}
-      />
-      <View style={styles.buttonContainer}>
-        <MainButton onPress={()=> setEnteredNumber('')}>Reset</MainButton>
-        <MainButton onPress = {confirmInputHandler} >Confirm</MainButton>
-      </View>
+    <View style={styles.rootContainer}>
+      <Title>Guess My Number</Title>
+      <Card>
+        <InstructionText> Enter a number </InstructionText>
+        <TextInput
+          style={styles.numberInput}
+          maxLength={2}
+          keyboardType="number-pad"
+          value={enteredNumber}
+          onChangeText={numberInputHandler}
+        />
+        <View style={styles.buttonContainer}>
+          <MainButton onPress={() => setEnteredNumber("")}>Reset</MainButton>
+          <MainButton onPress={confirmInputHandler}>Confirm</MainButton>
+        </View>
+      </Card>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  inputContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 50,
-    marginHorizontal: 24,
-    borderRadius: 8,
-    padding: 16,
-    backgroundColor: "#72063c",
-    elevation: 5,
-    shadowColor: "black",
-    shadowOffset: { width: 2, height: 2 },
-    shadowRadius: 6,
-    shadowOpacity: 0.35,
+  rootContainer:{
+    flex:1,
+    marginTop:75,
+    alignItems: 'center'
   },
   numberInput: {
     height: 50,
     width: 75,
     fontSize: 32,
-    borderBottomColor: "#ddb52f",
+    borderBottomColor: Colors.secondary500,
     borderBottomWidth: 2,
-    color: "#ddb52f",
+    color: Colors.secondary500,
     marginVertical: 8,
     fontWeight: "bold",
     textAlign: "center",
