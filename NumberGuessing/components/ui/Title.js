@@ -12,6 +12,8 @@ const styles = StyleSheet.create({
     fontSize: 28,
     color: "#f17272",
     textAlign: "center",
+    maxWidth:'80%',
+    
   },
 });
 export default Title

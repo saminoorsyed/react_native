@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, Dimensions} from "react-native";
 import React from "react";
 import Title from "../components/ui/Title";
 import Colors from "../constants/colors";
@@ -17,35 +17,34 @@ export default function GameOverScreen({roundsNumber, userNumber, onStartNewGame
   );
 }
 
+const deviceWidth = Dimensions.get('window').width;
+
 const styles = StyleSheet.create({
-  moveFromTop:{
-    flex:1,
-    justifyContent: 'center',
-    alignItems:'center'
+  moveFromTop: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
-  imageContainer:
-  {
-    width: 200,
-    height: 200,
-    borderRadius:100,
-    borderWidth:3,
-    color:Colors.primary600,
-    overflow:'hidden',
-    margin: 36
+  imageContainer: {
+    width: deviceWidth < 380 ? 150 : 300,
+    height: deviceWidth < 380 ? 150 : 300,
+    borderRadius: deviceWidth < 380 ? 75 : 150,
+    borderWidth: 3,
+    color: Colors.primary600,
+    overflow: "hidden",
+    margin: 36,
   },
-  image:{
-    width:"100%",
-    height: "100%"
+  image: {
+    width: "100%",
+    height: "100%",
   },
-  summaryText:{
-    fontFamily: 'open-sans',
+  summaryText: {
+    fontFamily: "open-sans",
     fontSize: 24,
-    marginBottom:25
+    marginBottom: 25,
   },
-  highlight:{
-    fontFamily: 'open-sans-bold',
-    color: Colors.primary500
-  }
-
-
-})
+  highlight: {
+    fontFamily: "open-sans-bold",
+    color: Colors.primary500,
+  },
+});

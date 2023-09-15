@@ -99,6 +99,7 @@ const GameScreen = ({ userNumber, onGameOver, handleLogRounds }) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
+    alignItems:'center',
     paddingTop: 50,
     paddingHorizontal: 16,
   },
