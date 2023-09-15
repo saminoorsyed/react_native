@@ -1,4 +1,4 @@
-import {Text, StyleSheet} from 'react-native'
+import {Text, StyleSheet, Platform} from 'react-native'
 import React from 'react'
 import Colors from '../../constants/colors';
 
@@ -13,7 +13,8 @@ const styles = StyleSheet.create({
     color: "#f17272",
     textAlign: "center",
     maxWidth:'80%',
-    
+    // borderWidth: Platform.OS === 'android'? 2:0
+    borderWidth: Platform.select({ios: 0, android: 2}),
   },
 });
 export default Title

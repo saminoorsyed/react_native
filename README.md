@@ -55,12 +55,38 @@ pop up = Modal{
 -- supports style prop, but should use a nested View
 } 
 
+StatusBar =>
+import { StatusBar } from "expo-status-bar";
+<StatusBar style="light"/>
+
 status bar = StatusBar{
 props ->  
   style: light, auto, dark
 }
 
+# Platform specificity:
+different styling for different ios (android, apple, windows etc):
+
+--import {Platform} from 'react-native'
+--borderWidth: Platform.OS === 'android'? 2:0
+OR
+--borderWidth: Platform.select({ios: 0, android: 2})
+
+platform specific files:
+
+adjust file name, imports stay the same. can use for constants colors, assests, images etc.
+-->Title.android.js
+-->Title.ios.js
+
+
+
 # Styling:
+
+KeyboardAvoidingView => allows you to still access app when keyboard shows up. wrap components around view
+<ScrollView style = {styles.screen}>
+      <KeyboardAvoidingView style ={styles.screen} behavior="position">
+      </KeyboardAvoidingView>
+</ScrollView>
 
 orientation:
 setting is in app.json
