@@ -141,8 +141,12 @@ option  #2: place screen options on Stack.Navigator component to set default opt
           <Stack.Screen name="MealsOverview" component={MealsOverviewScreen} />
 </Stack.Navigator>
 
+Dynamically adjusting the header
+
 
 # Styling:
+
+useLayoutEffect == useEffect, but is handled before /during the mounting of a component rather than after
 
 KeyboardAvoidingView => allows you to still access app when keyboard shows up. wrap components around view
 <ScrollView style = {styles.screen}>
