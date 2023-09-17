@@ -7,6 +7,13 @@ https://www.udemy.com/course/react-native-the-practical-guide/
 
 # Common Commands:
 
+create a new Project:
+
+npx create-expo-app AwesomeProject
+
+cd AwesomeProject
+npx expo start
+or
 npx expo --tunnel
 -- starts the app, displays exp qr code 
 
@@ -78,6 +85,12 @@ adjust file name, imports stay the same. can use for constants colors, assests, 
 -->Title.android.js
 -->Title.ios.js
 
+# Navigation:
+
+React Navigation => third party build to add navigation for expo and react native apps
+
+here are the docs:
+https://reactnavigation.org/
 
 
 # Styling:
