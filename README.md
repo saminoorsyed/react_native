@@ -88,9 +88,58 @@ adjust file name, imports stay the same. can use for constants colors, assests, 
 # Navigation:
 
 React Navigation => third party build to add navigation for expo and react native apps
-
+function renderCategoryItem(itemData) {
+    function pressHandler() {
+      navigation.navigate("Meals Overview", {
+        categoryId: itemData.item.id
+      })
+    }
+}
 here are the docs:
 https://reactnavigation.org/
+
+set up in app.js:
+
+ <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name = "Meal Categories" component={CategoriesScreen}/>
+          <Stack.Screen name = "Meals Overview" component = {MealsOverviewScreen}/>
+  </Stack.Navigator>
+
+each screen is automaticall passed a navigation item and a rout item. parameters are on the route object
+
+look at category screen for example of how to pass params
+also: https://reactnavigation.org/docs/route-prop
+
+
+styling screens
+option #1: use the options param for each screen, check out react navigation docs
+<Stack.Screen
+            name="MealCategories"
+            component={CategoriesScreen}
+            options={{
+              title: "Meal Categories",
+              headerStyle: { backgroundColor: "#fa7d39cc" },
+              headerTintColor: "white",
+              contentStyle: { backgroundColor: "#fbccb2cc" },
+            }}
+          />
+<Stack.Screen name="MealsOverview" component={MealsOverviewScreen} />
+
+option  #2: place screen options on Stack.Navigator component to set default opt for all screens, then use screen specific settings to make more specific to screen changes:
+
+<NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            title: "Meal Categories",
+            headerStyle: { backgroundColor: "#fa7d39cc" },
+            headerTintColor: "white",
+            contentStyle: { backgroundColor: "#fbccb2cc" },
+          }}
+        >
+          <Stack.Screen name="MealCategories" component={CategoriesScreen} />
+          <Stack.Screen name="MealsOverview" component={MealsOverviewScreen} />
+</Stack.Navigator>
 
 
 # Styling:
